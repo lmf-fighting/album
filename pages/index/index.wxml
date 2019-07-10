@@ -1,4 +1,4 @@
-<view class="item-contain" wx:for="{{recordInfo}}">
+<view class="item-contain" wx:for="{{recordInfo}}" wx:key="contain">
   <view class="item-head">
     <view class="item-head-icon">
       <image src="{{item.headIcon}}"></image>
@@ -9,7 +9,7 @@
     </view>
   </view>
   <view class="item-body">
-    <image  wx:for="{{item.imageList}}" wx:for-item="img" src="{{img}}"></image>
+    <image  wx:for="{{item.imageList}}" wx:key="images" data-list="{{item.imageList}}" data-src="{{img}}" wx:for-item="img" src="{{img}}" bindtap='previewImg'></image>
   </view>
   <view class="item-foot">
     <view class="item-good">
@@ -22,7 +22,7 @@
     </view>
     <view class="item-fx">
       <image src="/images/fx.png"></image>
-      <button rid="{{item._id}}">分享</button>
+      <button rid="{{item._id}}" open-type="share">分享</button>
     </view>
   </view>
 </view>

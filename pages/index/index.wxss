@@ -144,11 +144,11 @@ background-color: #eee;
   color:rgba(38,172,245,1);
 }
 .item-fx button{
-  width: 48rpx;
-  height: 24rpx;
+  width: 55rpx;
+  height: 26rpx;
   display: block;
   padding:0rpx;
-  line-height: 24rpx;
+  line-height: 26rpx;
   border-radius: 0rpx;
   font-size:24rpx;
   color:rgba(38,172,245,1);

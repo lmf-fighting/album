@@ -1,8 +1,8 @@
 {
   "pages": [ 
     "pages/empower/empower",
-    "pages/index2/index2",
     "pages/index/index",
+    "pages/index2/index2",
     "pages/logs/logs"
   ],
   "window": {

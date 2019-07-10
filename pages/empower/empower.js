@@ -19,7 +19,7 @@ Page({
               app.globalData.userInfo=res.userInfo;
               wx.redirectTo({
                 url: '/pages/index/index',
-                // url: '/pages/index2/index2',
+                //url: '/pages/index2/index2',
               })    
             }
           });

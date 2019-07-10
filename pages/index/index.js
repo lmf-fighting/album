@@ -62,7 +62,24 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log("来自页面内转发按钮"+res.target)
+    }
+    return {
+      title: '',
+      path: '/page/user?id=123'
+    }
+  },
+  //点击图片实现预览
+  //只支持 http 或者 https 协议的网络图片地址.
+  previewImg: function (e) {
+    var src = e.currentTarget.dataset.src;////获取data-src
+    var imgList = e.currentTarget.dataset.list;//获取data-list
+    wx.previewImage({
+      current: src,     // 当前显示图片的http链接
+      urls: imgList,     //需要预览的图片http链接列表
+    })
   }
 })
