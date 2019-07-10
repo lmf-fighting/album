@@ -1,3 +1,4 @@
+
 page{
 background-color: #eee;
 }
@@ -144,14 +145,22 @@ background-color: #eee;
   color:rgba(38,172,245,1);
 }
 .item-fx button{
-  width: 55rpx;
-  height: 26rpx;
+  width: 48rpx;
+  height: 24rpx;
   display: block;
   padding:0rpx;
-  line-height: 26rpx;
+  line-height: 24rpx;
   border-radius: 0rpx;
   font-size:24rpx;
   color:rgba(38,172,245,1);
   background-color: #fff;
   margin-left: 10rpx;
+}
+
+.add_icon{
+  position: fixed;
+  width: 166rpx;
+  height: 166rpx;
+  right: 17rpx;
+  bottom: 37rpx;
 }
