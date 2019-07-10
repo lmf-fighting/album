@@ -1,0 +1,8 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "相册",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 30,
+  "backgroundTextStyle": "dark"
+}

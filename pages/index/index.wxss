@@ -1,0 +1,157 @@
+page{
+background-color: #eee;
+}
+
+.item-contain{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 30rpx;
+  background-color: #fff;
+  margin-bottom: 10rpx;
+} 
+
+.item-head{
+  display: flex;
+  flex-direction: row;
+  width: 690rpx;
+  margin-top: 30rpx;
+}
+.item-head-icon{
+  width: 88rpx;
+  height: 88rpx;
+}
+.item-head-icon image{
+  width: 88rpx;
+  height: 88rpx;
+  border-radius:5px;
+}
+.item-head-userInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex:0%;
+  margin-left: 35rpx;
+}
+
+.item-nickName{
+  height:32rpx;
+  line-height: 32rpx;
+  font-size:34px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+}
+
+.item-time{
+  height:17rpx;
+  font-size:22rpx;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:400;
+  line-height: 17rpx;
+  color:rgba(169,169,169,1);
+  margin-top: 10rpx;
+}
+
+.item-body{
+  width: 690rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+.item-body image{
+  width: 210rpx;
+  height: 210rpx;
+  border-radius: 20rpx;
+}
+
+
+.item-body image{
+  margin-top: 30rpx;
+}
+/* 这种做法不行，不知道原因 */
+/* .item-body image:nth-child(2){
+  margin:0 30rpx;
+}
+.item-body image:nth-child(5){
+   margin:0 30rpx;
+}
+.item-body image:nth-child(8){
+   margin:0 30rpx;
+} */
+
+/* 这种和上面表达的意思一样，但是却可以 */
+.item-body image:nth-child(2){
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+.item-body image:nth-child(5){
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+.item-body image:nth-child(8){
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+.item-foot{
+  width: 690rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30rpx;
+  margin-bottom: 15rpx;
+}
+.item-foot view{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item-foot view text{
+  margin-left: 10rpx;
+}
+
+.item-good image{
+  width: 25rpx;
+  height: 26rpx;
+}
+
+.item-good text{
+  font-size:24rpx;
+  font-family:SourceHanSansCN-Light;
+  font-weight:300;
+  color:rgba(38,172,245,1);
+}
+
+.item-del image{
+  width: 24rpx;
+  height: 27rpx;
+}
+.item-del text{
+  font-size:24rpx;
+  font-family:SourceHanSansCN-Light;
+  font-weight:300;
+  color:rgba(38,172,245,1);
+}
+.item-fx image{
+  width: 26rpx;
+  height: 26rpx;
+}
+.item-fx text{
+  font-size:24rpx;
+  font-family:SourceHanSansCN-Light;
+  font-weight:300;
+  color:rgba(38,172,245,1);
+}
+.item-fx button{
+  width: 48rpx;
+  height: 24rpx;
+  display: block;
+  padding:0rpx;
+  line-height: 24rpx;
+  border-radius: 0rpx;
+  font-size:24rpx;
+  color:rgba(38,172,245,1);
+  background-color: #fff;
+  margin-left: 10rpx;
+}

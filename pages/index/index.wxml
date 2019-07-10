@@ -1,0 +1,28 @@
+<view class="item-contain" wx:for="{{recordInfo}}">
+  <view class="item-head">
+    <view class="item-head-icon">
+      <image src="{{item.headIcon}}"></image>
+    </view>
+    <view class="item-head-userInfo">
+      <text class="item-nikeName">{{item.nickName}}</text>
+      <text class="item-time">{{item.time}}</text>
+    </view>
+  </view>
+  <view class="item-body">
+    <image  wx:for="{{item.imageList}}" wx:for-item="img" src="{{img}}"></image>
+  </view>
+  <view class="item-foot">
+    <view class="item-good">
+      <image src="/images/good.png"></image>
+      <text rid="{{item._id}}">{{item.goodNum}}点赞</text>
+    </view>
+    <view class="item-del">
+      <image src="/images/del.png"></image>
+      <text rid="{{item._id}}">删除</text>
+    </view>
+    <view class="item-fx">
+      <image src="/images/fx.png"></image>
+      <button rid="{{item._id}}">分享</button>
+    </view>
+  </view>
+</view>
