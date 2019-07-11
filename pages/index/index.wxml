@@ -12,17 +12,17 @@
   <image wx:for="{{item.imageList}}" wx:key="images" data-list="{{item.imageList}}" data-src="{{img}}" wx:for-item="img" src="{{img}}" bindtap='previewImg'></image>
   </view>
   <view class="item-foot">
-    <view class="item-good">
+    <view class="item-good" bindtap="setGood">
       <image src="/images/good.png"></image>
-      <text rid="{{item._id}}">{{item.goodNum}}点赞</text>
+      <text data-rid="{{item._id}}">{{item.goodNum}}点赞</text>
     </view>
     <view class="item-del">
       <image src="/images/del.png"></image>
-      <text rid="{{item._id}}">删除</text>
+      <text data-rid="{{item._id}}" data-list="{{item.imageList}}">删除</text>
     </view>
     <view class="item-fx">
       <image src="/images/fx.png"></image>
-      <button rid="{{item._id}}" open-type="share">分享</button>
+      <button data-rid="{{item._id}}" open-type="share">分享</button>
     </view>
   </view>
 </view>

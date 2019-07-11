@@ -14,7 +14,7 @@
 		"coverView": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.3",
+	"libVersion": "2.7.4",
 	"appid": "wx3c9c9f85905d6416",
 	"projectname": "time_album",
 	"debugOptions": {
@@ -23,6 +23,7 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,

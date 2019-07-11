@@ -150,6 +150,81 @@ Page({
     wx.navigateTo({
       url: '/pages/index2/index2',
     })
-  }
+  },
+  //点赞按钮的点击事件
+  setGood: function (e) {
+    var that=this;
+    var rid = e.target.dataset.rid;
+    var oid=app.globalData.openId;
+    const db = wx.cloud.database()
+    db.collection('goodsInfo').where({ _openid: oid, recordId: rid }).get({
+      success: function (res) {
+        
+        if (res.data.length!=0) {//已经有了,取消点赞
+          console.log("开始取消点赞。。。")
+          //删除中间表记录
+          db.collection('goodsInfo').doc(res.data[0]._id).remove({
+            success: function (d) {
 
+              //查看点赞数是否为零
+              db.collection('recordInfo').doc(rid).get({
+                success: function (res) {
+                  console.log(res.data)
+                  if (res.data.goodNum > 0) {
+                    console.log("正在调用云函数。。。点赞-1。。。。")
+                    //点赞数-1
+                    that.updateGoodNum(rid,-1)
+                  }
+                }
+              })
+            }
+          })
+
+        } else {//点赞
+          //中间表记录
+          console.log("开始点赞。。。。")
+          db.collection('goodsInfo').add({
+            data: {
+              recordId: rid
+            },
+            success: function (res) {
+              console.log("正在调用云函数。。。点赞+1。。。。")
+              //点赞+1
+              that.updateGoodNum(rid, 1)
+            }
+          })
+        }
+      }
+    })
+  },
+  updateGoodNum:function(rid,num){
+    var that=this;
+    wx.cloud.callFunction({
+      name: 'updateGoodNum',
+      data: {
+        '_id': rid,
+        'i':num
+      },
+      success(res) { 
+        var index=that.data.recordInfo.findIndex((element) => (element._id == rid))
+        var str = "recordInfo[" + index + "].goodNum";
+        if(num==1){
+          wx.showToast({
+            title: '点赞',
+            icon: 'none'
+          })
+          var goodNum = that.data.recordInfo[index].goodNum+1;
+          that.setData({ [str]: goodNum })         
+        } else{
+          wx.showToast({
+            title: '取消',
+            icon: 'none'
+          })
+          var goodNum = that.data.recordInfo[index].goodNum - 1;
+          that.setData({ [str]: goodNum })
+        }  
+      },
+      fail: console.error
+    })
+  }
 })

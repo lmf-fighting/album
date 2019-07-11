@@ -1,4 +1,5 @@
 {
+  "cloud":true,
   "pages": [ 
     "pages/empower/empower",
     "pages/index/index",
