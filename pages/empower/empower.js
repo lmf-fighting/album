@@ -1,5 +1,4 @@
 const app = getApp();
-
 Page({
   data: {
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
@@ -18,8 +17,8 @@ Page({
               // 用户已经授权过,不需要显示授权页面,所以不需要改变 isHide 的值
               app.globalData.userInfo=res.userInfo;
               wx.redirectTo({
-                url: '/pages/index/index',
-                //url: '/pages/index2/index2',
+              url: '/pages/index/index',
+              //url: '/pages/index2/index2',
               })    
             }
           });

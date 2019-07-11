@@ -11,6 +11,7 @@
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
+		"checkInvalidKey": true,
 		"coverView": true
 	},
 	"compileType": "miniprogram",

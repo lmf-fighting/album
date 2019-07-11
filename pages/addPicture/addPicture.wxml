@@ -1,0 +1,35 @@
+
+<view class="container">
+
+  <view class='add'>
+  <image src='{{userInfo.avatarUrl}}' class='userinfo-avatar'></image>
+    <view class='username'>
+    <text>{{userInfo.nickName}}</text>
+     <!-- <image src='{{userInfo.avatarUrl}}'></image> -->
+      <view class='datetime'>
+        <text>{{datetime}}</text>
+        </view>
+      </view>
+        <image src='/images/circle-bg.png' class='circle-bg'></image>
+
+      
+    
+        <!-- 上传图片 -->
+  <view class="uploader">
+    <view class="uploader-text" bindtap="uploadAndInsert">
+      <view  >
+        <image src='/images/uploader.png' class='uploader-img'></image>
+      </view>
+      <text>上传图片</text>
+    </view>
+    <view class="uploader-container" wx:if="{{imgUrl}}">
+      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+    </view>
+  </view>
+
+
+    <view class='bg1'>
+      <image src='/images/bg1.png'>bg</image>
+    </view>
+  </view>
+</view>

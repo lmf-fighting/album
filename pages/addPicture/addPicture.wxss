@@ -1,0 +1,85 @@
+.container{
+  background-color: #26ACF5;
+  width: 750rpx;
+  height: 1346rpx;
+  position: relative;
+
+}
+
+.add{
+  background-color: #fff;
+  width: 604rpx;
+  height: 962rpx;
+  text-align: center;
+  position: absolute;
+  top: 130rpx;
+  border-radius: 20rpx;
+
+}
+.bg1{
+  position: absolute;
+  top: 50%;
+  
+  background-position:center;
+  margin-right: 20rpx;
+  transform:scale(0.9);
+}
+.uploader{
+  position: absolute;
+  top: 25%;
+ left: 16%;
+ border-width: 1rpx;
+
+ border-style: ridge;
+ width: 400rpx;
+ height:260rpx;
+ box-shadow: 2rpx 2rpx 1rpx 1rpx #dbd6d6;
+}
+.uploader-image{
+
+}
+.uploader-text{
+color: #26ACF5;
+}
+.uploader-img{
+  
+  width: 100rpx;
+  height: 100rpx;
+  padding-top: 50rpx;
+  z-index: 2;
+  
+}
+.username{
+  z-index: 5;
+  position: absolute;
+  left: 27%;
+  top: 12%;
+}
+.datetime{
+  color: #dbd6d6;
+  font-size: 26rpx;
+}
+.circle-bg{
+  position: absolute;
+  transform: (0.1);
+  width: 280px;
+  height: 190rpx;
+  z-index: 1;
+  left: 5%;
+  top: 0;
+  
+  background-position: center;
+}
+.userinfo-avatar{
+  overflow: hidden;
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+  box-shadow: 3rpx 3rpx 3rpx 10rpx #dbd6d6;
+  position: absolute;
+  bottom: 89%;
+  left: 32%;
+
+}
+

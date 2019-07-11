@@ -8,36 +8,10 @@ Page({
     recordInfo:[],
     pageInfo:{pageIndex:1,pageSize:5,total:0,sum:0,time:0}
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
   onLoad: function () {
     this.getPullDownData();
     // this.getRecordInfos();
     this.setData({ openId: app.globalData.openId, userInfo: app.globalData.userInfo })
-  },
-  //需要放在上传文件页面
-  uploadAndInsert: function () {
-    app.doChooseImage(app.globalData.userInfo.nickName);
-  },
-  doDownload: function (fileId) {
-    fileId = 'cloud://dev-cgj7w.6465-dev-cgj7w-1259601834/745c2279-2300-4d56-9b01-5f05c286af481562643271646.png'
-    app.doDownload(fileId)
-  },
-  //获取
-  getRecordInfos: function () {
-    var that = this;
-    const db = wx.cloud.database()
-    var pageSize = that.pageSize;
-    var pageIndex = that.pageIndex;
-    db.collection('recordInfo').orderBy('time', 'desc').skip(pageIndex * pageSize).limit(5).get({
-      success: function (res) {
-        that.setData({ recordInfo:res.data})
-      }
-    })
   },
   //得到下拉的数据
   getPullDownData:function(){
@@ -75,6 +49,7 @@ Page({
   },
   //得到上拉的数据
   getReachBottomData:function(){
+
       var that=this;
       if(that.data.pageInfo.sum<that.data.pageInfo.total){
         var pageIndex=that.data.pageInfo.pageIndex;
@@ -83,7 +58,6 @@ Page({
 
         that.setData({["pageInfo.pageIndex"]:pageIndex})
         const db = wx.cloud.database()
-        console.log(that.data.pageInfo.time)
         db.collection('recordInfo').where({ time: db.command.lte(that.data.pageInfo.time)}).orderBy('time', 'desc').skip((pageIndex-1)*pageSize).limit(pageSize).get({
           success: function (res) {
             var sum=that.data.pageInfo.sum;
@@ -95,17 +69,20 @@ Page({
             }
 
             that.setData({ recordInfo: records, ["pageInfo.sum"]: sum })
+            // 隐藏加载框
+            wx.hideLoading();
           },
         
         })
+        
       }else{
         wx.showToast({
           title: '到底啦~',
+          time:2000,
           icon:'none'
         })
       }
-    // 隐藏加载框
-    wx.hideLoading();
+   
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -133,8 +110,12 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (e) {
+    return{
+      title:'相册',
+      imageUrl: '',
+      path:'pages/index/index'
+    }
   } ,
    //点击图片实现预览
   //只支持 http 或者 https 协议的网络图片地址.
@@ -148,7 +129,7 @@ Page({
   },
   addImages:function(){
     wx.navigateTo({
-      url: '/pages/index2/index2',
+      url: '/pages/addPicture/addPicture',
     })
   },
   //点赞按钮的点击事件
@@ -169,7 +150,6 @@ Page({
               //查看点赞数是否为零
               db.collection('recordInfo').doc(rid).get({
                 success: function (res) {
-                  console.log(res.data)
                   if (res.data.goodNum > 0) {
                     console.log("正在调用云函数。。。点赞-1。。。。")
                     //点赞数-1
@@ -209,22 +189,69 @@ Page({
         var index=that.data.recordInfo.findIndex((element) => (element._id == rid))
         var str = "recordInfo[" + index + "].goodNum";
         if(num==1){
-          wx.showToast({
-            title: '点赞',
-            icon: 'none'
-          })
+          // wx.showToast({
+          //   title: '点赞',
+          //   icon: 'none'
+          // })
           var goodNum = that.data.recordInfo[index].goodNum+1;
           that.setData({ [str]: goodNum })         
         } else{
-          wx.showToast({
-            title: '取消',
-            icon: 'none'
-          })
+          // wx.showToast({
+          //   title: '取消',
+          //   icon: 'none'
+          // })
           var goodNum = that.data.recordInfo[index].goodNum - 1;
           that.setData({ [str]: goodNum })
         }  
       },
-      fail: console.error
+      fail: console.error})},
+
+  //删除图片
+  deleteMessages:function(e){
+    const db = wx.cloud.database()
+    var ed = e.target.dataset.rid
+    var list = e.target.dataset.list
+    var that=this;
+    wx.showModal({
+      title: '提示',
+      content: '是否删除该纪录',
+      //cancelColor: 'skyblue',//取消文字的颜色
+      confirmColor: 'skyblue',//确定文字的颜色
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          //删除云存储的文件
+          wx.cloud.deleteFile({
+            fileList: list
+          }).then(res => {
+            // handle success
+            //删除数据库的记录
+            db.collection('recordInfo').doc(ed).remove({
+              success: function (res) {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000//持续的时间
+                })
+                var index = that.data.recordInfo.findIndex((element) => (element._id == ed))
+                var tempRecordInfo = that.data.recordInfo;
+                if (index > -1) {
+                  tempRecordInfo.splice(index, 1);
+                }
+                var tempTotal=that.data.pageInfo.total-1;
+                var tempSum=that.data.pageInfo.sum-1
+                that.setData({ recordInfo: tempRecordInfo,['pageInfo.total']:tempTotal,['pageInfo.sum']:tempSum })  
+
+              }
+            })
+          }).catch(error => {
+            // handle error
+          })
+          
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
   }
 })

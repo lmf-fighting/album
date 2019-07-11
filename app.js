@@ -1,4 +1,7 @@
 //app.js
+var util = require('/utils/util.js');
+
+//app.js
 App({
   onLaunch: function () {
 
@@ -25,8 +28,6 @@ App({
     wx.cloud.callFunction({
       name: 'getOpenId',
       complete: res => {
-        console.log('callFunction test result: ', res)
-        console.log("test:" + res.result.event.userInfo.openId)
         that.globalData.openId =res.result.event.userInfo.openId
       }
     })
@@ -48,9 +49,7 @@ App({
           });
         }));
         promise.then(function (results) {
-          console.log("results:")
-          console.log(results);
-            that.doInsert(userInfo.avatarUrl, userInfo.nickName, new Date().getTime(), results);
+          that.doInsert(userInfo.avatarUrl, userInfo.nickName, util.formatTime(new Date()), results);
         }).catch(function (err) {
           console.log(err);
         });
@@ -59,10 +58,6 @@ App({
             console.error(e)
           }, complete: () => {
             wx.hideLoading()
-            wx.redirectTo({
-              // url: '/pages/index/index',
-              url: '/pages/index2/index2',
-            })
           }
     })
   },
@@ -83,7 +78,6 @@ App({
   },
   //插入数据库
   doInsert: function (headIcon, nickName, time,imageList) {
-    console.log("doInsert...")
     wx.cloud.database().collection('recordInfo').add({
       // data 字段表示需新增的 JSON 数据
       data: {
@@ -94,32 +88,9 @@ App({
         goodNum:0
       },
       success: function (res) {
-        console.log("res:" + res)
-      }
-    })
-  },
-  //下载
-  doDownload:function(fileId){
-    var that=this;
-    wx.cloud.downloadFile({
-      fileID: fileId,
-      success: res => {
-        // get temp file path
-        console.log("保存路径："+res.tempFilePath)
-        wx.saveImageToPhotosAlbum({
-
-          filePath: res.tempFilePath,
-          success(res) {
-            wx.showToast({
-              title: '下载成功',
-              icon: 'success',
-              duration: 2000
-            })
-          }
-        })
-      },
-      fail: err => {
-        // handle error
+        wx.redirectTo({
+          url: '/pages/index/index',
+        });
       }
     })
   },

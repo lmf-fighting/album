@@ -1,4 +1,4 @@
-<view class="item-contain" wx:for="{{recordInfo}}">
+<view class="item-contain" wx:for="{{recordInfo}}" wx:key="{{contain}}">
   <view class="item-head">
     <view class="item-head-icon">
       <image src="{{item.headIcon}}"></image>
@@ -16,7 +16,7 @@
       <image src="/images/good.png"></image>
       <text data-rid="{{item._id}}">{{item.goodNum}}点赞</text>
     </view>
-    <view class="item-del">
+    <view class="item-del" wx:if="{{openId==item._openid}}" bindtap='deleteMessages'>
       <image src="/images/del.png"></image>
       <text data-rid="{{item._id}}" data-list="{{item.imageList}}">删除</text>
     </view>

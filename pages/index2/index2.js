@@ -36,7 +36,7 @@ Page({
         console.log(res)
       }
     })
-  },
+  }
 
 
 })
