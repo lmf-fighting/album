@@ -13,7 +13,9 @@
   </view>
   <view class="item-foot">
     <view class="item-good" bindtap="setGood">
-      <image src="/images/good.png"></image>
+      
+      <image src="/images/redgood.png" wx:if="{{item.isGood}}"></image>
+      <image src="/images/good.png" wx:else></image>
       <text data-rid="{{item._id}}">{{item.goodNum}}点赞</text>
     </view>
     <view class="item-del" wx:if="{{openId==item._openid}}" bindtap='deleteMessages'>

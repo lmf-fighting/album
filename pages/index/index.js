@@ -25,7 +25,9 @@ Page({
         if (total < res.total){
           db.collection('recordInfo').orderBy('time', 'desc').skip(0).limit(5).get({
             success: function (d) {
-              that.setData({ recordInfo: d.data, pageInfo: { pageIndex: 1, pageSize: 5, total: res.total, sum: d.data.length,time:d.data[0].time}})
+              
+              //得到的数据之前是否有点过赞
+              that.isGood(d,true,res) 
             }
           })
           wx.showToast({
@@ -60,17 +62,10 @@ Page({
         const db = wx.cloud.database()
         db.collection('recordInfo').where({ time: db.command.lte(that.data.pageInfo.time)}).orderBy('time', 'desc').skip((pageIndex-1)*pageSize).limit(pageSize).get({
           success: function (res) {
-            var sum=that.data.pageInfo.sum;
-            sum=sum+ res.data.length;
+            //得到的数据之前是否有点过赞
+            that.isGood(res,false,res);
 
-            var records=that.data.recordInfo;
-            for (let i of res.data) {
-              records.push(i)
-            }
-
-            that.setData({ recordInfo: records, ["pageInfo.sum"]: sum })
-            // 隐藏加载框
-            wx.hideLoading();
+            
           },
         
         })
@@ -84,6 +79,54 @@ Page({
       }
    
   },
+  //d中的数据之前本用户是否有点过赞
+  isGood:function(d,flag,res){
+    var that=this;
+    var p=new Promise(function () {
+    var array = [];   
+    const db = wx.cloud.database()
+    const _ = db.command;
+    for (var i = 0; i < d.data.length; i++) {
+      d.data[i].isGood = false;
+      array.push(d.data[i]._id)
+    }
+    db.collection('goodsInfo').where({
+      recordId: _.in(array),
+      _openid: app.globalData.openId
+    }).get({
+      success: function (s) {
+        for (var i = 0; i < s.data.length; i++) {
+          var index = d.data.findIndex((element) => (element._id == s.data[i].recordId))
+          if (index > -1) {
+            d.data[index].isGood = true;
+          }
+        }
+        if(flag){
+          that.setData({ recordInfo: d.data, pageInfo: { pageIndex: 1, pageSize: 5, total: res.total, sum: d.data.length, time: d.data[0].time } })
+        }else{
+          var sum = that.data.pageInfo.sum;
+          sum = sum + res.data.length;
+          var records = that.data.recordInfo;
+
+          for (let i of res.data) {
+            records.push(i)
+          }
+
+          that.setData({ recordInfo: records, ["pageInfo.sum"]: sum })
+          // 隐藏加载框
+          wx.hideLoading();
+        }
+      },
+      fail: function (e) {
+        console.log(e)     
+      }
+    })
+    })
+    return p;
+    　　
+  },
+
+
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
@@ -188,20 +231,21 @@ Page({
       success(res) { 
         var index=that.data.recordInfo.findIndex((element) => (element._id == rid))
         var str = "recordInfo[" + index + "].goodNum";
+        var isGood = "recordInfo[" + index + "].isGood";
         if(num==1){
           // wx.showToast({
           //   title: '点赞',
           //   icon: 'none'
           // })
           var goodNum = that.data.recordInfo[index].goodNum+1;
-          that.setData({ [str]: goodNum })         
+          that.setData({ [str]: goodNum, [isGood]:true })         
         } else{
           // wx.showToast({
           //   title: '取消',
           //   icon: 'none'
           // })
           var goodNum = that.data.recordInfo[index].goodNum - 1;
-          that.setData({ [str]: goodNum })
+          that.setData({ [str]: goodNum,[isGood]: false })
         }  
       },
       fail: console.error})},
